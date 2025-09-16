@@ -1,0 +1,962 @@
+/* ---------- Paleta “Sage / Fern” ---------- */
+:root{
+  --bg:#f3f6f3;
+  --card:#ffffff;
+  --surface:#f0f4f0;
+  --text:#17231d;
+  --muted:#5f6f65;
+
+  --accent:#2d6a4f;
+  --accent-2:#84a98c;
+  --accent-3:#a8c69f;
+  --ring:rgba(45,106,79,.25);
+
+  --code-bg:#eaf5ee;
+  --badge-bg:rgba(45,106,79,.12);
+
+  --shadow:0 6px 18px rgba(23,35,29,.06);
+  --maxw:980px;
+}
+
+/* ---------- Reset básico ---------- */
+*{ box-sizing:border-box; }
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+/* ---------- Encabezado ---------- */
+header{
+  background:linear-gradient(90deg, rgba(168,198,159,.25), rgba(132,169,140,.08));
+  border-bottom:1px solid rgba(45,106,79,.12);
+}
+.container{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:28px;
+}
+
+/* Masthead con logo protagonista */
+header .masthead{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;  /* texto | logo */
+  align-items:center;
+  gap:28px;
+}
+
+/* Título fluido (1 sola regla) */
+h1{
+  font-size:clamp(1.6rem, 1.2rem + 1.2vw, 2.25rem);
+  margin:0 0 6px;
+}
+.byline{ color:var(--muted); font-size:0.95rem; }
+header .head-text h1{ margin-bottom:6px; }
+header .head-text nav{ margin-top:14px; }
+
+/* Medallón del logo (1 sola versión, responsivo con clamp) */
+.brand-card{
+  margin:0;
+  width:clamp(120px, 16vw, 240px);
+  height:clamp(120px, 16vw, 240px);
+  justify-self:end;
+  position:relative;
+  border-radius:50%;
+  padding:14px;
+  background:
+    radial-gradient(130px circle at 55% 40%, rgba(0,0,0,.04), rgba(0,0,0,0) 70%),
+    linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,0));
+  box-shadow:0 18px 32px rgba(0,0,0,.14), 0 2px 0 rgba(255,255,255,.6) inset;
+  border:1px solid rgba(0,0,0,.06);
+}
+.brand-card img{
+  display:block;
+  width:100%; height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  background:#fff;
+  border:5px solid #fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
+}
+/* Fallback si no carga la imagen */
+.brand-card.fallback::before{
+  content:"";
+  position:absolute; inset:14px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #cfd8ce 0%, #a9b7a8 60%, #8ea089 100%);
+  border:5px solid #fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
+}
+.brand-card.fallback::after{
+  content:"Proyecto";
+  position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-50%);
+  font-weight:700; font-size:16px; color:rgba(0,0,0,.55);
+}
+
+/* ---------- Navegación ---------- */
+nav{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+nav a{
+  padding:8px 12px;
+  color:var(--accent);
+  text-decoration:none;
+  background:transparent;
+  border-radius:8px;
+  font-weight:600;
+  border:1px solid transparent;
+}
+nav a:hover{
+  background:rgba(45,106,79,.08);
+  border-color:rgba(45,106,79,.15);
+}
+
+/* ---------- Contenido principal ---------- */
+main{ padding:28px 0; }
+section.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(23,35,29,.05);
+}
+h2{ font-size:1.1rem; margin-top:0; }
+
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 320px;
+  gap:18px;
+}
+
+/* ---------- Listas, footer & extras ---------- */
+ul{ margin:0 0 12px 20px; }
+footer{
+  padding:18px 0;
+  color:var(--muted);
+  font-size:0.9rem;
+  text-align:center;
+  background:linear-gradient(180deg, transparent, var(--surface));
+  border-radius:12px;
+}
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  background:var(--badge-bg);
+  color:var(--accent);
+  border-radius:999px;
+  font-weight:600;
+  font-size:0.85rem;
+}
+code{
+  background:var(--code-bg);
+  padding:2px 6px;
+  border-radius:6px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+  font-size:0.9em;
+}
+
+.bibliography p{ margin:8px 0; }
+.toc{ font-size:0.95rem; }
+.meta{ font-size:0.92rem; color:var(--muted); margin-bottom:8px; }
+
+/* ---------- Texto colapsado ---------- */
+.collapsed{
+  max-height:4.8em;
+  overflow:hidden;
+  position:relative;
+}
+.collapsed::after{
+  content:'';
+  position:absolute; inset:auto 0 0 0;
+  height:1.6em;
+  background:linear-gradient(to bottom, rgba(243,246,243,0), var(--bg) 90%);
+}
+
+/* ---------- Marco teórico / colapsables ---------- */
+.extra-content{
+  max-height:999em;
+  overflow:hidden;
+  transition:max-height .35s ease;
+}
+.extra-content.collapsed{ max-height:0; }
+.collapsible{ overflow:hidden; transition:max-height .35s ease; }
+
+/* ---------- Botones (flecha / principal) ---------- */
+.read-toggle,
+.marco-toggle{
+  width:32px; height:32px;
+  border:none; border-radius:50%;
+  background:var(--accent);
+  cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:0;
+  transition:background .2s, transform .2s;
+  box-shadow:0 3px 10px rgba(45,106,79,.25);
+}
+.read-toggle:hover,
+.marco-toggle:hover{ background:#245742; transform:translateY(-1px); }
+.read-toggle:focus,
+.marco-toggle:focus{ outline:3px solid var(--ring); outline-offset:3px; }
+.read-toggle::before,
+.marco-toggle::before{
+  content:'\25BC';
+  font-size:1rem; color:#fff; transition:transform .3s;
+}
+.read-toggle[aria-expanded="true"]::before,
+.marco-toggle[aria-expanded="true"]::before{ transform:rotate(180deg); }
+
+/* ---------- Aside fijo ---------- */
+.sticky{ position:sticky; top:28px; }
+
+/* ---------- Figuras / imágenes ---------- */
+figure.media{
+  margin:12px 0;
+  background:var(--card);
+  border:1px solid rgba(23,35,29,.06);
+  border-radius:12px;
+  padding:8px;
+  box-shadow:var(--shadow);
+}
+figure.media img{ width:100%; display:block; border-radius:8px; }
+figure.media figcaption{ color:var(--muted); font-size:.9rem; margin-top:6px; }
+
+/* ---------- Hero opcional ---------- */
+.hero{
+  border-radius:12px;
+  background:linear-gradient(120deg, rgba(132,169,140,.35), rgba(168,198,159,.15));
+  overflow:hidden; position:relative; min-height:200px;
+  display:grid; place-items:end start; padding:24px;
+}
+.hero img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.28; }
+.hero h2, .hero p{ position:relative; margin:0; }
+
+/* ---------- Responsive (UN solo bloque) ---------- */
+@media (max-width:880px){
+  header .masthead{ grid-template-columns:1fr; }
+  .brand-card{ justify-self:start; }          /* el tamaño ya lo controla clamp */
+  .two-col{ grid-template-columns:1fr; }
+  nav{ justify-content:flex-start; }
+}
+
+
+/* ====== Header con logo a la derecha y nav a lo ancho ====== */
+header .masthead{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto; /* texto | logo */
+  align-items:center;
+  gap:28px;
+}
+
+/* Truco: “aplana” .head-text para que sus hijos participen del grid del padre */
+header .head-text{ display:contents; }
+
+/* Título y byline en la columna 1 */
+header .head-text h1{ grid-column:1; margin:0 0 6px; }
+.byline{ grid-column:1; color:var(--muted); font-size:0.95rem; }
+
+/* El nav ocupa TODO el ancho (debajo del título y del logo) */
+header nav{
+  grid-column:1 / -1;
+  display:flex;
+  flex-wrap:wrap;           /* puede saltar a 2 filas si no entra */
+  gap:10px 14px;            /* fila x columna */
+  margin-top:14px;
+  overflow:visible;         /* sin scrollbars */
+}
+
+header nav a{
+  white-space:nowrap;
+  padding:6px 10px;
+  color:var(--accent);
+  text-decoration:none;
+  background:transparent;
+  border-radius:8px;
+  font-weight:600;
+  border:1px solid transparent;
+}
+header nav a:hover{
+  background:rgba(45,106,79,.08);
+  border-color:rgba(45,106,79,.15);
+}
+
+/* Medallón del logo: igual que ya tenías, responsivo */
+.brand-card{
+  margin:0;
+  width:clamp(120px, 16vw, 240px);
+  height:clamp(120px, 16vw, 240px);
+  justify-self:end;
+  position:relative;
+  border-radius:50%;
+  padding:14px;
+  background:
+    radial-gradient(130px circle at 55% 40%, rgba(0,0,0,.04), rgba(0,0,0,0) 70%),
+    linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,0));
+  box-shadow:0 18px 32px rgba(0,0,0,.14), 0 2px 0 rgba(255,255,255,.6) inset;
+  border:1px solid rgba(0,0,0,.06);
+}
+.brand-card img{
+  display:block;
+  width:100%; height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  background:#fff;
+  border:5px solid #fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
+}
+
+/* Responsive: en móvil no cambia —el nav ya ocupa todo el ancho */
+@media (max-width:880px){
+  header .masthead{ grid-template-columns:1fr auto; }
+  /* si prefieres el logo abajo en móvil:
+     header .masthead{ grid-template-columns:1fr; }
+     .brand-card{ justify-self:start; }
+  */
+}
+
+
+/* --- Logo fijo en esquina sup. izquierda --- */
+:root{ --logoSize: clamp(110px, 12vw, 180px); }
+
+header{ position:relative; }
+header .brand-card{
+  position:absolute;
+  top:18px;
+  left:18px;
+  width:var(--logoSize);
+  height:var(--logoSize);
+  margin:0;
+  z-index:1;
+}
+
+/* --- Masthead: ya no usamos grid; solo contenido centrado --- */
+header .masthead{ display:block; }
+
+/* --- Contenedor del header centrado --- */
+header .container{
+  max-width: var(--maxw);
+  margin: 0 auto;       /* centra el bloque de texto */
+  padding: 28px;        /* padding uniforme */
+}
+
+/* --- Texto y navegación centrados --- */
+header .head-text{ text-align:center; }
+header nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px 14px;
+  margin-top:10px;
+}
+header nav a{ white-space:nowrap; }
+
+/* --- En móviles evitamos que el texto pase por debajo del logo --- */
+@media (max-width: 720px){
+  header .container{
+    padding-left: calc(20px + var(--logoSize) + 14px);
+  }
+  /* si prefieres mantener todo centrado también en móvil, comenta las 2 líneas de abajo */
+  header .head-text{ text-align:left; }
+  header nav{ justify-content:flex-start; }
+}
+
+
+/* Bibliografía: puntos y separación */
+/* ===== Bibliografía: viñetas y espaciado ===== */
+.bibliography .bullet{
+  display:block;
+  margin:6px 0;
+  padding-left:.9em;
+  position:relative;
+}
+.bibliography .bullet::before{
+  content:"•";
+  position:absolute;
+  left:0;
+  transform:translateX(-.9em);
+  color:var(--accent);
+  font-weight:700;
+}
+
+/* (opcional) asegura que el nav pueda saltar a dos filas sin scroll */
+header nav{
+  display:flex;
+  flex-wrap:wrap;       /* permite varias filas si no entra */
+  gap:10px 14px;
+  margin-top:14px;
+  overflow:visible;     /* sin barras */
+}
+
+
+/* ===== Galería de anexos ===== */
+/* ===== Rail horizontal de anexos ===== */
+.gallery-wrap{
+  position: relative;
+  margin-top: 8px;
+}
+
+.gallery{
+  /* fila desplazable */
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 8px 18px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;        /* Firefox: oculta barra */
+}
+.gallery::-webkit-scrollbar{ display:none; } /* WebKit: oculta barra */
+
+/* “Más bonito”: desvanecido en bordes cuando hay overflow */
+.gallery-wrap.gallery-overflow .gallery{
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent);
+          mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent);
+}
+
+.gallery .media{
+  flex: 0 0 clamp(240px, 32vw, 360px);  /* ancho de cada tarjeta */
+  scroll-snap-align: center;
+  margin: 0;
+}
+.gallery .media img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:12px;
+}
+
+/* ===== Flecha inferior “llamativa” ===== */
+.gallery-nav{
+  display:flex;
+  justify-content:center;
+  margin-top: 8px;
+}
+
+/* Botón-pez (forma orgánica en tu paleta) */
+.gallery-next{
+  position: relative;
+  width: 84px;
+  height: 42px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  outline-offset: 3px;
+}
+
+.gallery-next .arrow-body{
+  position:absolute; inset:0 12px 0 0;
+  border-radius: 999px 18px 18px 999px;
+  background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
+  box-shadow: 0 8px 18px rgba(45,106,79,.25);
+}
+.gallery-next .arrow-head{
+  position:absolute; right:0; top:50%;
+  width: 0; height: 0;
+  transform: translateY(-50%);
+  border-left: 18px solid var(--accent-2);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  filter: drop-shadow(0 6px 10px rgba(45,106,79,.25));
+}
+
+/* Interacción */
+.gallery-next:hover .arrow-body{ transform: translateX(2px); }
+.gallery-next:active .arrow-body{ transform: translateX(4px) scale(.98); }
+.gallery-next:focus-visible{ outline: 3px solid var(--ring); }
+
+/* Texto de figcaption en tarjetas (si lo usas) */
+.gallery .media figcaption{
+  color: var(--muted);
+  font-size: .9rem;
+  margin-top: 8px;
+  text-align: center;
+}
+
+
+/* ===== Lightbox (modal de imagen) ===== */
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  z-index:9999;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+.lightbox.open{ opacity:1; pointer-events:auto; }
+
+.lightbox__img{
+  max-width:min(92vw, 1100px);
+  max-height:90vh;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  display:block;
+}
+
+.lightbox__caption{
+  margin-top:10px;
+  color:#fff;
+  text-align:center;
+  font-size:.95rem;
+}
+
+.lightbox__close{
+  position:absolute;
+  top:12px;
+  right:16px;
+  width:36px;
+  height:36px;
+  border:none;
+  border-radius:50%;
+  background:#fff;
+  color:#111;
+  font-size:20px;
+  line-height:36px;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+.lightbox__close:hover{ transform:scale(1.04); }
+
+
+/* ===== Galería horizontal (una sola fila, sin superposiciones) ===== */
+.gallery-wrap{ display:grid; gap:14px; }
+.gallery-strip{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:6px 2px 10px;             /* algo de aire para la sombra */
+  scroll-behavior:smooth;
+  /* oculta barras nativas para que destaque la nuestra */
+  scrollbar-width:none;             /* Firefox */
+}
+.gallery-strip::-webkit-scrollbar{ display:none; }
+
+.gallery-strip .media{
+  flex:0 0 auto;                    /* no se encogen */
+  width: min(320px, 42vw);          /* tamaño adaptable bonito */
+  margin:0;
+  background:var(--card);
+  border:1px solid rgba(23,35,29,.06);
+}
+
+
+/* ===== Carrusel de anexos ===== */
+.gallery-wrap{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+/* Rail horizontal con tarjetas */
+.gallery-rail{
+  display:flex;
+  gap:16px;
+  overflow:hidden;                 /* ocultamos overflow (controlado por barra custom) */
+  scroll-behavior:smooth;
+  padding:4px;
+}
+
+.gallery-rail .media{
+  flex:0 0 320px;                  /* ancho de tarjeta */
+  margin:0;
+  background:var(--card);
+  border:1px solid rgba(23,35,29,.08);
+  border-radius:12px;
+  padding:8px;
+  box-shadow:var(--shadow);
+}
+.gallery-rail .media img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:8px;
+}
+
+/* Barra inferior con flechas estilo “scroll” */
+.gallery-scroll{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:6px 8px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(132,169,140,.12), rgba(168,198,159,.08));
+  border:1px solid rgba(45,106,79,.14);
+  box-shadow:0 8px 24px rgba(23,35,29,.08) inset;
+}
+
+.gbtn{
+  width:38px; height:38px;
+  border:none; border-radius:50%;
+  background:var(--accent);
+  color:#fff; font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 14px rgba(45,106,79,.28);
+  transition:transform .15s ease, background .15s ease, opacity .15s ease;
+}
+.gbtn:hover{ transform:translateY(-1px); background:#245742; }
+.gbtn:disabled{ opacity:.45; cursor:default; transform:none; }
+
+/* Pista y pulgar (thumb) arrastrable */
+.gtrack{
+  position:relative;
+  flex:1;
+  height:10px;
+  background:rgba(45,106,79,.15);
+  border-radius:999px;
+  overflow:hidden;
+}
+.gthumb{
+  position:absolute; top:0; left:0;
+  height:100%;
+  width:18%;                         /* se recalcula vía JS */
+  background:linear-gradient(90deg, var(--accent-2), var(--accent-3));
+  box-shadow:0 0 0 2px rgba(255,255,255,.55) inset, 0 4px 10px rgba(23,35,29,.18);
+  border-radius:inherit;
+  cursor:grab;
+  transition:background .2s ease;
+}
+.gthumb:active{ cursor:grabbing; }
+
+/* Centrado del conjunto en layouts anchos */
+#anexos .card,
+#anexos .gallery-wrap{ width:100%; }
+#anexos .gallery-rail,
+#anexos .gallery-scroll{ margin-inline:auto; max-width:var(--maxw); }
+
+/* Responsivo: tarjetas un poco más angostas en móviles */
+@media (max-width: 700px){
+  .gallery-rail .media{ flex-basis:260px; }
+}
+
+
+/* === Miniaturas del carrusel con tamaño uniforme === */
+/* Tarjeta: ancho “fijo–fluido” */
+.gallery-rail .media{ flex:0 0 350px; }       /* cámbialo a 280/360 si quieres */
+
+/* El <a> se usa como marco con proporción fija */
+.gallery-rail .media a{
+  display:block;
+  aspect-ratio: 16 / 9;        /* todas iguales */
+  overflow:hidden;
+  border-radius:8px;
+  background:var(--surface);   /* “letterbox” si la imagen no llena */
+}
+
+/* La imagen se recorta para llenar el marco */
+.gallery-rail .media img{
+  width:100%;
+  height:100%;
+  object-fit: cover;           /* <- “cover” recorta; usa 'contain' si prefieres sin recorte */
+}
+
+
+/* ===== Carrusel de anexos: 3 por vista (2 en pantallas medianas) ===== */
+:root{
+  --cards-per-view: 3;    /* <- cámbialo a 2 si quieres 2 por defecto */
+  --rail-gap: 16px;
+}
+
+/* La “ventana” del carrusel */
+.gallery-viewport{
+  overflow: hidden;                 /* recorta lo que sobra */
+  width: 100%;
+  padding-block: 4px;               /* respiro arriba/abajo */
+  scroll-snap-type: x mandatory;    /* snap si el usuario arrastra */
+}
+
+/* La fila de tarjetas */
+.gallery-rail{
+  display: flex;
+  gap: var(--rail-gap);
+  padding-inline: 0;                /* sin padding que rompa el cálculo */
+}
+
+/* Cada tarjeta ocupa 1/N del ancho, contando gaps */
+.gallery-rail .media{
+  flex: 0 0 calc(
+    (100% - (var(--cards-per-view) - 1) * var(--rail-gap))
+    / var(--cards-per-view)
+  );
+  scroll-snap-align: start;
+  margin: 0;
+}
+
+/* Marco de imagen con proporción uniforme */
+.gallery-rail .media a{
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+/* La imagen rellena el marco (cámbialo a 'contain' si no quieres recorte) */
+.gallery-rail .media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* En pantallas medianas mostramos 2 por vista automáticamente */
+@media (max-width: 980px){
+  :root{ --cards-per-view: 2; }
+}
+
+/* Botones decorativos (si ya los tenés, puedes dejar los tuyos) */
+.gallery-controls{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.gallery-controls .gallery-btn{
+  width: 36px; height: 36px; border: 0; border-radius: 50%;
+  background: var(--accent); color: #fff; cursor: pointer;
+  box-shadow: 0 6px 18px rgba(23,35,29,.15);
+}
+.gallery-controls .gallery-btn:disabled{ opacity:.4; cursor:not-allowed; }
+
+
+/* ===== Audio player - estilo acorde a la paleta (Sage / Fern) ===== */
+.audio-player{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,250,248,0.9));
+  border-radius:12px;
+  padding:12px 16px;
+  box-shadow: var(--shadow);
+  border:1px solid rgba(23,35,29,.04);
+  max-width:900px;
+  margin: 0 auto 18px; /* centra y deja espacio abajo antes del carrusel */
+}
+
+.audio-btn{
+  width:48px;
+  height:48px;
+  border-radius:999px;
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
+  font-size:18px;
+  display:inline-grid;
+  place-items:center;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(45,106,79,.18);
+}
+.audio-btn .icon{ display:inline-block; transform:translateY(-1px); }
+
+.audio-btn:active{ transform:scale(.98); }
+.audio-btn[aria-pressed="true"]{ background: linear-gradient(180deg, var(--accent-2), var(--accent)); }
+
+.audio-meta{ flex:1; min-width:0; }
+.audio-title{ font-weight:600; color:var(--text); font-size:0.95rem; margin-bottom:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+.audio-controls{ display:flex; gap:12px; align-items:center; }
+.audio-progress{
+  position:relative;
+  background: #e9efe9;
+  height:10px;
+  border-radius:999px;
+  flex:1;
+  cursor:pointer;
+  overflow:hidden;
+  min-width:160px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
+}
+.audio-progress__bar{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius:999px;
+  transition: width .08s linear;
+}
+
+.audio-vol{
+  width:90px;
+  appearance:none;
+  height:6px;
+  border-radius:6px;
+  background:#e6efe6;
+}
+.audio-vol::-webkit-slider-thumb{ appearance:none; width:14px; height:14px; border-radius:50%; background:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,.15); cursor:pointer; }
+
+/* Responsive: en móvil apila */
+@media (max-width:560px){
+  .audio-player{ flex-direction:column; align-items:stretch; gap:10px; padding:10px; }
+  .audio-controls{ align-items:center; }
+  .audio-vol{ width:100%; }
+}
+
+/* ===== Botón simple + transcripción deslizante ===== */
+.audio-trans-wrap{
+  margin-top:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+
+
+/* botón que queda visualmente en la misma "línea" del reproductor */
+.btn-trans{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(45,106,79,.12);
+  transition:transform .12s ease, background .12s;
+}
+.btn-trans:hover{ transform:translateY(-3px); background:#245742; }
+.btn-trans:focus{ outline:3px solid var(--ring); outline-offset:3px; }
+
+/* Caja de la transcripción (colapsable con max-height) */
+.transcript-box{
+  width:100%;
+  max-width:980px;
+  background:linear-gradient(180deg, rgba(240,244,240,.6), rgba(240,244,240,.4));
+  border-radius:10px;
+  padding:16px 18px;
+  border:1px solid rgba(23,35,29,.04);
+  color:var(--text);
+  line-height:1.55;
+  overflow:hidden;
+  transition: max-height .45s cubic-bezier(.2,.9,.2,1), opacity .25s ease;
+}
+
+/* inicio cerrado */
+.transcript-box.collapsed{
+  max-height:0;
+  padding-top:0;
+  padding-bottom:0;
+  opacity:0;
+  border:0;
+}
+
+/* abierto */
+.transcript-box.open{
+  max-height:1400px; /* suficientemente grande para la mayoría de transcripciones */
+  opacity:1;
+  border:1px solid rgba(23,35,29,.05);
+}
+
+/* párrafos */
+.transcript-box p{ margin:0 0 12px; }
+
+/* pequeño ajuste móvil */
+@media (max-width:720px){
+  .btn-trans{ padding:10px 14px; font-size:0.95rem; }
+  .transcript-box{ padding:12px; }
+}
+
+/* Ajuste para el reproductor de audio dentro de una sección .card */
+.card .audio-player {
+  max-width: 100%;
+  margin-inline: 0;
+  margin-bottom: 0;
+  box-shadow: none;
+  border: 1px solid rgba(23, 35, 29, .1);
+  background: var(--surface);
+}
+
+
+/* ---------- Video introductivo: estilo para #video.card .videoLocura video ---------- */
+#video.card {
+  /* mantiene el mismo estilo de las cards de la página */
+  padding: 18px;
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(23,35,29,.04);
+  margin-bottom: 18px;
+}
+
+/* contenedor interno: centra y controla el ancho */
+.videoLocura{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;      /* centra el título y el video */
+  justify-content: center;
+}
+
+/* título (h2) dentro del bloque */
+.videoLocura h2{
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  text-align: left; /* igual que otras secciones */
+}
+
+/* envoltorio para el vídeo: controla el aspecto, responsivo */
+.videoLocura .video-wrap{
+  width: 100%;
+  max-width: calc(var(--maxw) - 40px); /* deja algo de padding relativo a la card */
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden; /* es importante para border-radius y sombras */
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+
+/* el elemento <video> en sí: responsivo y proporcionado */
+.videoLocura video{
+  width: 100%;
+  height: auto;            /* mantiene la proporción nativa del video */
+  display: block;
+  border: none;
+  background: #000;        /* evita fondo blanco mientras carga */
+  object-fit: contain;     /* para que el video no se corte */
+}
+
+/* versión alternativa: forzar ratio 16:9 cuando quieras uniformidad */
+.videoLocura .video-wrap.ratio-16-9{
+  position: relative;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+.videoLocura .video-wrap.ratio-16-9 video{
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* o 'contain' si no quieres recortes */
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 880px){
+  .videoLocura h2{ text-align: left; } /* mantén coherencia en móvil */
+  .videoLocura .video-wrap{ max-width: 100%; }
+}
+
+/* pequeño toque visual si quieres un botón flotante de reproducción (opcional) */
+.videoLocura .video-overlay-play{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 72px; height:72px;
+  border-radius:50%;
+  background: rgba(45,106,79,.92);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size:22px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  cursor: pointer;
+  z-index: 3;
+}
