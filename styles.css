@@ -1,5 +1,6 @@
 /* === Variables y Estilos Generales === */
 
+
 :root {
   /* Fondos y Superficies */
   --bg: #f9f9f7;         /* Un blanco apenas cálido para el fondo general */
@@ -25,6 +26,24 @@
   
   /* Variables de layout (se mantienen) */
   --maxw: 980px;
+
+/* REEMPLAZÁ TU :root POR ESTE */
+:root {
+  --bg: #f3f6f3;
+  --card: #ffffff;
+  --surface: #f0f4f0;
+  --text: #17231d;
+  --muted: #5f6f65;
+  --accent: #2d6a4f;
+  --accent-2: #84a98c;
+  --accent-3: #a8c69f;
+  --ring: rgba(45,106,79,.25);
+  --code-bg: #eaf5ee;
+  --badge-bg: rgba(45,106,79,.12);
+  --shadow: 0 6px 18px rgba(23,35,29,.06);
+  --maxw: 980px;
+  --border-color: rgba(23,35,29,.1); /* Añadido para consistencia */
+  --accent-hover: #245742; /* Añadido para consistencia */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -201,6 +220,7 @@ h2 {
 .media { margin: 0; flex: 0 0 clamp(150px, 25vw, 250px); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.2s; }
 .media:hover { transform: scale(1.05); }
 
+
 .gallery-scroll {
   /* Eliminamos el fondo y borde del contenedor para un look más limpio */
   display: flex;
@@ -210,6 +230,7 @@ h2 {
   margin: 1.5rem auto 0 auto; /* Lo mantenemos centrado */
 }
 
+.gallery-scroll { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; }
 .gbtn { background: #ddd; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
 .gtrack { flex: 1; max-width: 400px; height: 6px; background: #e0e0e0; border-radius: 3px; position: relative; }
 .gthumb { width: 20%; height: 100%; background: var(--accent-color); border-radius: 3px; position: absolute; cursor: grab; }
@@ -453,12 +474,41 @@ footer {
 }
 
 
+
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent); /* Color verde principal */
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(45, 106, 79, .28);
+  transition: transform .15s ease, background .15s ease, opacity .15s ease;
+  flex-shrink: 0;
+}
+
+.gbtn:hover {
+  transform: translateY(-1px);
+  background: var(--accent-hover);
+}
+
+.gbtn:disabled {
+  opacity: .45;
+  cursor: default;
+  transform: none;
+  background: var(--muted);
+}
+
 /* La pista sobre la que se desliza la barra */
 .gtrack {
   position: relative;
   flex: 1;
   height: 6px; /* Más fina */
   background: var(--surface); /* Un color de fondo muy suave */
+
+  height: 10px;
+  background: rgba(45, 106, 79, .15);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -469,11 +519,19 @@ footer {
   top: 0;
   left: 0;
   height: 100%;
+
   width: 25%; /* Esto se sigue ajustando con JS */
   background: var(--accent); /* Color de acento sólido, más moderno que el gradiente */
   border-radius: inherit;
   /* Quitamos los estilos de agarre para un look más simple */
   cursor: default; 
+
+  width: 25%; /* Se ajusta con JS, pero le damos un ancho inicial */
+  background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, .55) inset;
+  border-radius: inherit;
+  cursor: grab;
+
 }
 
 .gthumb:active {
