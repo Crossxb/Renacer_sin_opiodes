@@ -424,29 +424,26 @@ footer {
   transform: scale(1.05); /* Un pequeño efecto de zoom al pasar el mouse */
 }
 
-/* --- Estilos para Controles de la Galería --- */
+/* --- Estilos para Controles de la Galería (CORREGIDO) --- */
 .gallery-scroll {
+  /* Contenedor principal de los controles */
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 6px 8px;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid rgba(45, 106, 79, .14);
+  gap: 16px;
   max-width: 500px;
-  margin: 1.5rem auto 0 auto; /* Centra la barra de controles */
+  margin: 1.5rem auto 0 auto;
 }
 
-/* Estilo de los botones (similar al del reproductor de audio) */
+/* Botones de flecha */
 .gbtn {
   width: 40px;
   height: 40px;
-  border: 1px solid var(--border-color); /* Un borde sutil */
+  border: 1px solid var(--border-color);
   border-radius: 50%;
-  background: var(--card); /* Fondo blanco */
-  color: var(--accent);    /* Icono en color de acento */
+  background: var(--card);
+  color: var(--accent);
   font-weight: 700;
-  font-size: 1.2rem; /* Hacemos el icono un poco más grande */
+  font-size: 1.2rem;
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: all .2s ease-out;
@@ -454,7 +451,6 @@ footer {
   display: grid;
   place-items: center;
 }
-
 
 .gbtn:hover {
   transform: translateY(-2px) scale(1.05);
@@ -473,67 +469,25 @@ footer {
   border-color: transparent;
 }
 
-
-
-  width: 38px;
-  height: 38px;
-  border: none;
-  border-radius: 50%;
-  background: var(--accent); /* Color verde principal */
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 6px 14px rgba(45, 106, 79, .28);
-  transition: transform .15s ease, background .15s ease, opacity .15s ease;
-  flex-shrink: 0;
-}
-
-.gbtn:hover {
-  transform: translateY(-1px);
-  background: var(--accent-hover);
-}
-
-.gbtn:disabled {
-  opacity: .45;
-  cursor: default;
-  transform: none;
-  background: var(--muted);
-}
-
 /* La pista sobre la que se desliza la barra */
 .gtrack {
   position: relative;
   flex: 1;
-  height: 6px; /* Más fina */
-  background: var(--surface); /* Un color de fondo muy suave */
-
-  height: 10px;
-  background: rgba(45, 106, 79, .15);
+  height: 6px;
+  background: var(--surface);
   border-radius: 999px;
   overflow: hidden;
 }
 
-/* La barra que se puede arrastrar (el "thumb") */
+/* La barra de progreso (el "thumb") */
 .gthumb {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-
   width: 25%; /* Esto se sigue ajustando con JS */
-  background: var(--accent); /* Color de acento sólido, más moderno que el gradiente */
+  background: var(--accent);
   border-radius: inherit;
-  /* Quitamos los estilos de agarre para un look más simple */
-  cursor: default; 
-
-  width: 25%; /* Se ajusta con JS, pero le damos un ancho inicial */
-  background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, .55) inset;
-  border-radius: inherit;
-  cursor: grab;
-
+  cursor: default;
 }
-
-.gthumb:active {
-  cursor: grabbing;
 }
