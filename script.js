@@ -138,20 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-// --- Lógica para todos los botones .content-toggle ---
-document.querySelectorAll('.content-toggle').forEach(button => {
-  button.addEventListener('click', () => {
-    const isExpanded = button.getAttribute('aria-expanded') === 'true';
-    const contentId = button.getAttribute('aria-controls');
-    const content = document.getElementById(contentId);
-
-    if (content) {
-      button.setAttribute('aria-expanded', !isExpanded);
-      content.classList.toggle('collapsed');
-      button.textContent = content.classList.contains('collapsed') ? 'Mostrar' : 'Ocultar';
-    }
-  });
-});
 
 // --- Lógica para el carrusel de la galería con barra de scroll personalizada ---
 (function initAnexosCarousel() {

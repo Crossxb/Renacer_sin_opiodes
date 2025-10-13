@@ -325,6 +325,7 @@ h2 {
 }
 
 /* --- Estilos para Secciones Colapsables --- */
+/* --- Estilos para Secciones Colapsables --- */
 .collapsible-content {
   overflow: hidden;
   transition: max-height 0.5s ease-out, opacity 0.4s ease-out, margin-top 0.5s ease-out;
@@ -335,7 +336,6 @@ h2 {
   padding-top: 1rem;
 }
 
-/* REEMPLAZÁ la regla .collapsible-content.collapsed por esta */
 .collapsible-content.collapsed {
   max-height: 7em;  /* Altura de la vista previa (aprox. 4 líneas) */
   opacity: 1;       /* Forzamos la opacidad para que se vea el texto */
@@ -382,6 +382,7 @@ h2 {
   transform: rotate(180deg);
 }
 
+/*hola hasta aqui no tienes q borrar :v */
 /* --- Estilo para el Footer --- */
 footer {
   padding: 28px 0;
@@ -490,4 +491,64 @@ footer {
   border-radius: inherit;
   cursor: default;
 }
+
+
+/* === Acordeón de Preguntas (Estilo Moderno) === */
+/* === ESTILO DE ACORDEÓN PARA SECCIONES INDIVIDUALES === */
+
+
+/* El título/botón que se clickea */
+.acordeon-item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem; /* Pequeño padding para alinear */
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none; /* Oculta la flecha por defecto */
+  transition: color 0.2s ease;
+}
+
+.acordeon-item summary:hover {
+  color: var(--accent);
+}
+
+.acordeon-item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* El ícono de flecha (chevron) */
+.acordeon-item summary::after {
+  content: '';
+  width: 0.6em;
+  height: 0.6em;
+  border-style: solid;
+  border-color: var(--accent);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg); /* Apunta hacia abajo */
+  transition: transform 0.3s ease-out;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+/* Cuando el acordeón está abierto, la flecha gira */
+.acordeon-item[open] > summary::after {
+  transform: rotate(-135deg); /* Apunta hacia arriba */
+}
+
+.acordeon-item[open] > summary {
+  color: var(--accent);
+}
+
+/* El contenido que se despliega */
+.acordeon-content {
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  line-height: 1.7;
+  border-top: 1px solid var(--border-color); /* Separador visual interno */
+  margin-top: 1rem;
+}
+
+
 }
