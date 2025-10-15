@@ -1,44 +1,103 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  // --- REPRODUCTOR DE AUDIO ---
-  const audio = document.getElementById('anexoAudio');
-  if (audio) {
-    const playBtn = document.querySelector('.audio-btn');
-    const playIcon = playBtn.querySelector('.icon');
-    const progress = document.querySelector('.audio-progress');
-    const progressBar = document.querySelector('.audio-progress__bar');
-    const volumeCtrl = document.querySelector('.audio-vol');
+// --- REPRODUCTOR DE AUDIO (VERSIÓN CON HIGHLIGHT DE TRANSCRIPCIÓN) ---
+const audio = document.getElementById('anexoAudio');
+if (audio) {
+  const playBtn = document.querySelector('.audio-btn');
+  const playIcon = playBtn.querySelector('.icon');
+  const progress = document.querySelector('.audio-progress');
+  const progressBar = document.querySelector('.audio-progress__bar');
+  const volumeCtrl = document.querySelector('.audio-vol');
+  const timeDisplay = document.querySelector('.audio-time');
+  const transcriptPs = document.querySelectorAll('#transcriptBox p');
+  let lastHighlightedP = null;
 
-    playBtn.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
-        playIcon.textContent = '❚❚';
-        playBtn.setAttribute('aria-pressed', 'true');
-      } else {
-        audio.pause();
-        playIcon.textContent = '▶';
-        playBtn.setAttribute('aria-pressed', 'false');
+  // --- 1. SETUP INICIAL: LEER TIMESTAMPS ---
+  // Convertimos los [MM:SS] de cada párrafo a segundos y los guardamos.
+  transcriptPs.forEach(p => {
+    const timestampSpan = p.querySelector('.timestamp');
+    if (timestampSpan) {
+      const timeText = timestampSpan.textContent.match(/\[(\d+):(\d+)\]/);
+      if (timeText) {
+        const minutes = parseInt(timeText[1], 10);
+        const seconds = parseInt(timeText[2], 10);
+        p.dataset.time = (minutes * 60) + seconds;
+      }
+    }
+  });
+
+  // --- 2. FUNCIONES DEL REPRODUCTOR ---
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    return `${minutes}:${formattedSeconds}`;
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    timeDisplay.textContent = `${formatTime(0)} / ${formatTime(audio.duration)}`;
+  });
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playIcon.textContent = '❚❚';
+      playBtn.setAttribute('aria-pressed', 'true');
+    } else {
+      audio.pause();
+      playIcon.textContent = '▶';
+      playBtn.setAttribute('aria-pressed', 'false');
+    }
+  });
+
+  // --- 3. LÓGICA DE ACTUALIZACIÓN EN TIEMPO REAL ---
+  audio.addEventListener('timeupdate', () => {
+    const currentTime = audio.currentTime;
+    
+    // Actualizar barra y tiempo
+    const percent = (currentTime / audio.duration) * 100;
+    progressBar.style.width = `${percent}%`;
+    progress.setAttribute('aria-valuenow', percent);
+    timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(audio.duration)}`;
+
+    // Lógica para resaltar el párrafo correcto
+    let activeP = null;
+    transcriptPs.forEach(p => {
+      if (currentTime >= p.dataset.time) {
+        activeP = p;
       }
     });
 
-    audio.addEventListener('timeupdate', () => {
-      const percent = (audio.currentTime / audio.duration) * 100;
-      progressBar.style.width = `${percent}%`;
-      progress.setAttribute('aria-valuenow', percent);
-    });
+    if (activeP && activeP !== lastHighlightedP) {
+      // Quitar el resaltado de todos los párrafos
+      transcriptPs.forEach(p => p.classList.remove('highlight-transcript'));
+      // Añadir el resaltado al párrafo activo
+      activeP.classList.add('highlight-transcript');
+      
+      // Hacer que la caja de transcripción se desplace automáticamente
+      const transcriptBox = document.getElementById('transcriptBox');
+      if (!transcriptBox.classList.contains('collapsed')) {
+        activeP.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      
+      lastHighlightedP = activeP;
+    }
+  });
 
-    progress.addEventListener('click', (e) => {
-      const rect = progress.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const width = rect.width;
-      const percent = x / width;
-      audio.currentTime = percent * audio.duration;
-    });
+  // Ir a un punto del audio al hacer clic en la barra
+  progress.addEventListener('click', (e) => {
+    const rect = progress.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const width = rect.width;
+    const percent = x / width;
+    audio.currentTime = percent * audio.duration;
+  });
 
-    volumeCtrl.addEventListener('input', () => {
-      audio.volume = volumeCtrl.value;
-    });
-  }
+  // Control de volumen
+  volumeCtrl.addEventListener('input', () => {
+    audio.volume = volumeCtrl.value;
+  });
+}
 
   // --- BOTÓN DE TRANSCRIPCIÓN (LÓGICA ACTUALIZADA) ---
   const toggleBtn = document.getElementById('toggleTranscript');
