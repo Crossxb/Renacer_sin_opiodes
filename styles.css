@@ -593,5 +593,8 @@ footer {
   font-weight: bold;
 }
 
+.lightbox-info {
+  display: none !important;
+}
 
 }
