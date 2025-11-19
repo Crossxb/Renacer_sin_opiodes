@@ -709,4 +709,24 @@ footer {
   }
 }
 
+
+/* === Botón de Descarga PDF === */
+.download-btn {
+  display: inline-block;
+  background-color: var(--accent); /* El verde de tu paleta */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 999px; /* Bordes bien redondos */
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.download-btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  color: white;
+}
+
 }
