@@ -157,44 +157,76 @@ if (audio) {
     });
   }
   
-  // --- LIGHTBOX PARA GALERÍA (NUEVA LÓGICA) ---
-  const lightbox = document.getElementById('lightbox-overlay');
-  if (lightbox) {
-    const galleryLinks = document.querySelectorAll('.gallery-rail .media a');
-    const lightboxImage = lightbox.querySelector('.lightbox-image');
-    const lightboxInfo = lightbox.querySelector('.lightbox-info');
-    const closeBtn = lightbox.querySelector('.lightbox-close');
 
-    galleryLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const imgSrc = link.href;
-        lightboxImage.setAttribute('src', imgSrc);
-        
-        // Aquí puedes agregar la lógica para el panel de información
-        lightboxInfo.innerHTML = `<h3>Información de la imagen</h3><p>Descripción para la imagen: <strong>${imgSrc.split('/').pop()}</strong>.</p><p>Este es un texto de ejemplo que puedes reemplazar luego.</p>`;
-        
-        lightbox.classList.add('visible');
-      });
-    });
+// --- LIGHTBOX PARA GALERÍA (SIMPLIFICADO CON NAVEGACIÓN) ---
+const lightbox = document.getElementById('lightbox-overlay');
+if (lightbox) {
+  const galleryLinks = Array.from(document.querySelectorAll('.gallery-rail .media a'));
+  const lightboxImage = lightbox.querySelector('.lightbox-image');
+  const closeBtn = lightbox.querySelector('.lightbox-close');
+  const prevBtn = lightbox.querySelector('.lightbox-nav-btn.prev');
+  const nextBtn = lightbox.querySelector('.lightbox-nav-btn.next');
 
-    const closeLightbox = () => {
-      lightbox.classList.remove('visible');
-      // Opcional: limpiar la imagen para que no "salte" la próxima vez
-      setTimeout(() => {
-        lightboxImage.setAttribute('src', '');
-      }, 300);
-    };
+  let currentImageIndex = 0;
 
-    closeBtn.addEventListener('click', closeLightbox);
-    
-    // Cerrar al hacer clic en el fondo oscuro
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        closeLightbox();
-      }
-    });
+  // Función para mostrar una imagen específica en el lightbox
+  function showImageInLightbox(index) {
+    if (index < 0 || index >= galleryLinks.length) return;
+
+    currentImageIndex = index;
+    const currentLink = galleryLinks[currentImageIndex];
+    const imgElement = currentLink.querySelector('img'); // Para obtener el alt
+
+    lightboxImage.setAttribute('src', currentLink.href);
+    lightboxImage.setAttribute('alt', imgElement.alt); // Importante para accesibilidad
+
+    // Actualizar estado de los botones de navegación
+    prevBtn.disabled = (currentImageIndex === 0);
+    nextBtn.disabled = (currentImageIndex === galleryLinks.length - 1);
   }
+
+  // Evento para abrir el lightbox al hacer clic en una imagen de la galería
+  galleryLinks.forEach((link, index) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      showImageInLightbox(index);
+      lightbox.classList.add('visible');
+    });
+  });
+
+  // Eventos de navegación
+  prevBtn.addEventListener('click', () => {
+    showImageInLightbox(currentImageIndex - 1);
+  });
+  nextBtn.addEventListener('click', () => {
+    showImageInLightbox(currentImageIndex + 1);
+  });
+
+  // Cerrar lightbox
+  const closeLightbox = () => {
+    lightbox.classList.remove('visible');
+    // Limpiar la imagen para evitar "flash" al abrir la próxima vez
+    setTimeout(() => {
+      lightboxImage.setAttribute('src', '');
+    }, 300);
+  };
+
+  closeBtn.addEventListener('click', closeLightbox);
+  
+  // Cerrar al hacer clic en el fondo oscuro
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  // Cerrar con la tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('visible')) {
+      closeLightbox();
+    }
+  });
+}
 
 
 
