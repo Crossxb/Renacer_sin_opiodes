@@ -729,4 +729,62 @@ footer {
   color: white;
 }
 
+
+/* === Botón de Juego Interactivo === */
+.game-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover)); /* Degradado atractivo */
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px; /* Bordes bien redondos */
+  text-decoration: none;
+  font-weight: 800; /* Letra más gruesa */
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3); /* Sombra más pronunciada */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 2px solid white; /* Borde blanco para resaltar */
+}
+
+.game-btn:hover {
+  transform: translateY(-4px) scale(1.02); /* Efecto de "flotar" al pasar el mouse */
+  box-shadow: 0 8px 25px rgba(45, 106, 79, 0.4);
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent)); /* Invertir degradado */
+}
+
+.game-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(45, 106, 79, 0.3);
+}
+
+
+/* === AJUSTES FINALES DE ESPACIADO === */
+
+/* 1. Reducimos el margen inferior de todas las tarjetas */
+.card {
+  margin-bottom: 1rem !important; /* Achica el espacio entre secciones */
+  padding-bottom: 1.5rem !important; /* Menos espacio al fondo dentro de la tarjeta */
+}
+
+/* 2. Pegamos más la galería al título "Anexos gráficos" */
+.gallery-scroll {
+  margin-top: 0.8rem !important; /* Antes era 1.5rem */
+  margin-bottom: 0.5rem !important; /* Espacio debajo de la barra de scroll */
+}
+
+/* 3. Ajustamos el contenedor del botón de juego para quitarle aire */
+/* Usamos un selector específico para el div que agregamos en el HTML */
+#anexos > div:last-of-type {
+  margin-top: 0.5rem !important; /* Lo acerca mucho más a la barra de scroll */
+  padding-top: 1rem !important; /* Espacio interno superior más chico */
+  border-top: 1px solid var(--border-color);
+}
+
+/* 4. Reducimos el espacio entre el texto "¿Crees que...?" y el botón */
+#anexos > div:last-of-type p {
+  margin-bottom: 0.5rem !important; /* Texto más pegado al botón */
+  margin-top: 0 !important;
+}
+
+
 }
